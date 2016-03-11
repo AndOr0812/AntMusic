@@ -11,6 +11,8 @@ Put the congfiurations in /etc/antrota and call them cgminer.conf.HH where HH is
 
 AntThrottle is also a shell script that automatically backs the clock speed off if the miner gets too hot. Modify the script to specifty the temperature threshold - if the temperatiure reaches this, AntThrottle will reduce the clock speed by 25MHz and wait 30 seconds (and keep doing this until the temperature gets below your threshold or it runs out of predefined drops).
 
+You can use both daemons together. AntRota will set the hour by hour profile and AntThrottle will try to prevent your equipment overheating (for example, if AntRota overclocks your miner and it gets hot, AntThrottle will bring it back down again shortly afterwards).
+
 Both scripts are installed on your miner in /usr/local/bin/ and have a SystemV daemon handler in /etc/init.d. Start them using /etc/init.d/[daemon] start. To make them automatically start on system startup create a symbolic link (cd /etc/rcS.d; ln -s ../init.d/antrota S65antrota; ln -s ../init.d/antthrottle S66antthrottle;).
 
 Both scripts produce log files is /var/log/. You will need to manage these if you run your miner for a very long time without a reboot (restarting the daemons will start the log files anew).

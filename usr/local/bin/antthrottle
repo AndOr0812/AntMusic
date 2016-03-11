@@ -6,6 +6,7 @@ PATH=$PATH:/bin:/usr/bin
 MAXTEMP=50
 REFTEMP=0
 
+CODE400="3:400:0f82"
 CODE375="3:375:0e82"
 CODE350="3:350:0d82"
 CODE325="4:325:0c82"
@@ -46,7 +47,7 @@ do
 		eval REPLACE='$'CODE$FREQ
 		eval WITH='$'CODE$DROP
 
-		sed -i -- 's/'$REPLACE'/'$WITH'/' /config/cgminer.conf
+		sed -i -- 's/'$REPLACE'/'$WITH'/g' /config/cgminer.conf
 
 		/etc/init.d/cgminer.sh restart >>/var/log/antthrottle.log
 	fi

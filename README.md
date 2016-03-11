@@ -17,4 +17,4 @@ Both scripts are installed on your miner in /usr/local/bin/ and have a SystemV d
 
 Both scripts produce log files is /var/log/. You will need to manage these if you run your miner for a very long time without a reboot (restarting the daemons will start the log files anew).
 
-You will need to ssh onto your miner to install the software and configure it: using a linux box on the same LAN, ssh antMiner.local (user root, password admin). You can copy the software from your linux box using scp antMusic.zip antMiner.local:. . If you don't have a linux box on the same LAN you will have to figure out how to ssh to your miner yourself.
+You will need to ssh onto your miner to install the software and configure it: using a linux box on the same LAN, ssh antMiner.local (user root, password admin). You can copy the software from your linux box using scp AntMusic-matser.zip antMiner.local:. . If you don't have a linux box on the same LAN you will have to figure out how to ssh to your miner yourself.

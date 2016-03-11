@@ -7,11 +7,11 @@ The two daemons are currently running on my S5 without any untoward behaviour so
 
 AntRota is a shell script that automatically switches between configurations at certain times of the day. You can have as many as 24 different configurations (one for each hour of the day) but you can leave gaps. You can use different configurations to increase or decrease the clock speed and to modify the fan speed. I have a night mode with a low clock speed and reduced fan RPM - so I can get some sleep - and other daytime configurations so the miner works hardest in the morning and then backs off a little for the afternoon.
 
-Put the congfiurations in /etc/antrota and call them cgminer.conf.<HH> where HH is 00 for midnight, 01 for 1AM, etc. You can generate these files using the Bitmain-provided Miner Configutation web interface - just set things up how you want them and then copy /config/cgminer.config to /etc/antrota/.
+Put the congfiurations in /etc/antrota and call them cgminer.conf.HH where HH is 00 for midnight, 01 for 1AM, etc. You can generate these files using the Bitmain-provided Miner Configutation web interface - just set things up how you want them and then copy /config/cgminer.config to /etc/antrota/.
 
 AntThrottle is also a shell script that automatically backs the clock speed off if the miner gets too hot. Modify the script to specifty the temperature threshold - if the temperatiure reaches this, AntThrottle will reduce the clock speed by 25MHz and wait 30 seconds (and keep doing this until the temperature gets below your threshold or it runs out of predefined drops).
 
-Both scripts are installed on your miner in /usr/local/bin/ and have a SystemV daemon handler in /etc/init.d. Start them using /etc/init.d/<daemon> start. To make them automatically start on system startup create a symbolic link (cd /etc/rcS.d; ln -s ../init.d/antrota S65antrota; ln -s ../init.d/antthrottle S66antthrottle;).
+Both scripts are installed on your miner in /usr/local/bin/ and have a SystemV daemon handler in /etc/init.d. Start them using /etc/init.d/[daemon] start. To make them automatically start on system startup create a symbolic link (cd /etc/rcS.d; ln -s ../init.d/antrota S65antrota; ln -s ../init.d/antthrottle S66antthrottle;).
 
 Both scripts produce log files is /var/log/. You will need to manage these if you run your miner for a very long time without a reboot (restarting the daemons will start the log files anew).
 

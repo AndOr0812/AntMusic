@@ -1,6 +1,7 @@
-Tip - Fixing DNS Problems
+#Tip - Fixing DNS Problems
 
-If your miner take a while to start hashing, you may have a DNS problem. When you connect it up to your LAN it uses DHCP to get its IP address and other local network information.
+If your miner takes a while to start hashing, you may have a DNS problem. When you connect it up to your LAN it uses DHCP to get its IP address and other local network information.
+
 Mine would not find URLs on the Internet straight way (could not ping www.google.com) so it sat there doing nothing.
 
 If you have this problem...

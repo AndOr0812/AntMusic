@@ -1,0 +1,55 @@
+#!/bin/sh
+
+echo "Starting AntThrottle" >/var/log/antthrottle.log
+
+PATH=$PATH:/bin:/usr/bin
+MAXTEMP=50
+REFTEMP=0
+
+CODE375="3:375:0e82"
+CODE350="3:350:0d82"
+CODE325="4:325:0c82"
+CODE300="4:300:0b82"
+CODE275="4:275:0a82"
+CODE250="5:250:0982"
+CODE225="5:225:0882"
+CODE200="6:200:0782"
+
+DROP400="375"
+DROP375="350"
+DROP350="325"
+DROP325="300"
+DROP300="275"
+DROP275="250"
+DROP250="225"
+DROP225="200"
+
+while true
+do
+	TEMP=`cgminer-api -o stats | awk -F "," '{print $61}' | awk -F "=" '{print $2}'`
+
+	if [ "$TEMP" -ne "$REFTEMP" ]
+	then
+		echo "Average Temperature: $TEMP" >>/var/log/antthrottle.log
+		REFTEMP=$TEMP
+	fi
+
+	if [ "$TEMP" -ge "$MAXTEMP" ]
+	then
+		echo "Too Hot!" >>/var/log/antthrottle.log
+
+		FREQ=`cgminer-api -o stats | awk -F "," '{print $21}' | awk -F "=" '{print $2}'`
+		eval DROP='$'DROP$FREQ
+
+		echo "Current frequency is $FREQ, dropping to $DROP" >>/var/log/antthrottle.log
+
+		eval REPLACE='$'CODE$FREQ
+		eval WITH='$'CODE$DROP
+
+		sed -i -- 's/'$REPLACE'/'$WITH'/' /config/cgminer.conf
+
+		/etc/init.d/cgminer.sh restart >>/var/log/antthrottle.log
+	fi
+
+	sleep 30
+done

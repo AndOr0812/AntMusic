@@ -1,0 +1,53 @@
+#!/bin/sh
+
+POOL="pool.ntp.org"
+
+echo "Setting Date and Time using $POOL" >/var/log/antrota.log
+
+/usr/bin/ntpdate -b -s -u $POOL
+
+DATE=`/bin/date +"%c"`
+
+echo "Date: $DATE" >> /var/log/antrota.log
+
+TARGET="/config/cgminer.conf"
+
+while true
+do
+	while true
+	do
+		sleep 1
+
+		SEC=`/bin/date +"%S"`
+
+		if [ "$SEC" == "00" ]
+		then
+			break
+		fi
+	done
+
+	HOUR=`/bin/date +"%H"`
+	MIN=`/bin/date +"%M"`
+
+	if [ "$MIN" = "00" ]
+	then
+		echo "Time: $HOUR:$MIN:$SEC" >>/var/log/antrota.log
+
+		SOURCE="/etc/antrota/cgminer.conf.$HOUR"
+
+		echo "Looking for $SOURCE" >>/var/log/antrota.log
+
+		if [ -e $SOURCE ]
+		then
+			echo "Changing to new mode"
+
+			/bin/cp -a $SOURCE $TARGET
+
+			echo "Restarting miner" >>/var/log/antrota.log
+			/etc/init.d/cgminer.sh restart >>/var/log/antrota.log
+			echo "Done" >> /var/log/antrota.log
+		else
+			echo "Not found" >>/var/log/antrota
+		fi
+	fi
+done

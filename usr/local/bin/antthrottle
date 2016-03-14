@@ -47,9 +47,14 @@ do
 		eval REPLACE='$'CODE$FREQ
 		eval WITH='$'CODE$DROP
 
-		sed -i -- 's/'$REPLACE'/'$WITH'/g' /config/cgminer.conf
+		if [ "$REPLACE" = "" ]
+		then
+			echo "Unsupported clock frequency ($FREQ). Please set to one of 200MHz to 400MHz in steps of 25MHz." >>/var/log/antthrottle.log
+		else
+			sed -i -- 's/'$REPLACE'/'$WITH'/g' /config/cgminer.conf
 
-		/etc/init.d/cgminer.sh restart >>/var/log/antthrottle.log
+			/etc/init.d/cgminer.sh restart >>/var/log/antthrottle.log
+		fi
 	fi
 
 	sleep 30

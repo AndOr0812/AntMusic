@@ -47,7 +47,7 @@ do
 			/etc/init.d/cgminer.sh restart >>/var/log/antrota.log
 			echo "Done" >> /var/log/antrota.log
 		else
-			echo "Not found" >>/var/log/antrota
+			echo "Not found" >>/var/log/antrota.log
 		fi
 	fi
 done

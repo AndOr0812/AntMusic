@@ -36,7 +36,7 @@ That's it - now you can login using
 
 remote:~$ ssh ant@antminer.local
 
-remote:~$ exit
+antminer:~$ exit
 
 without a password, which means you can also execute remote commands there. Try
 

@@ -20,7 +20,7 @@ remote:~$ ssh ant@antminer.local
 
 antminer:~$ mkidir .ssh
 
-logoff again
+logoff again.
 
 Create a suitable key on your remote host:
 
@@ -30,12 +30,16 @@ and transfer it to your new user.
 
 remote:~$ scp .ssh/id_rsa.pub ant@antminer:.ssh/authorized_keys
 
+There are lots of ways of doing the above steps - there's no right or wrong way - but these statements are among the ones that work.
+
 That's it - now you can login using
 
 remote:~$ ssh ant@antminer.local
 
+remote:~$ exit
+
 without a password, which means you can also execute remote commands there. Try
 
-ssh ant@antminer.local 'cgminer-api -o stats'
+remote:~$ ssh ant@antminer.local 'cgminer-api -o stats'
 
 you should get complete miner stats on your remote terminal!

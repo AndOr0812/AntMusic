@@ -41,3 +41,5 @@ without a password, which means you can also execute remote commands there. Try
 remote:~$ ssh ant@antminer.local 'cgminer-api -o stats'
 
 you should get complete miner stats on your remote terminal!
+
+So now you can run commands on your miner without anyone needing to type in a password, which means you can automate them (using cron for instance).

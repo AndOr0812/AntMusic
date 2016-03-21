@@ -8,6 +8,8 @@ remote:~$ ssh root@antminer.local
 
 antminer:~$ useradd -d /config/ant ant
 
+(notice that I've told my miner OS to make /config my user's default home directory - this is because /config on the S5 is persistent storage, so nothing I put in this user's home will be overwritten when I reboot).
+
 antminer:~$ passwd ant
 
 give it a password and then logoff your miner.

@@ -16,7 +16,7 @@ root@antMiner:~# vi /usr/share/udhcpc/default.script
 
 add
 
-dns="8.8.8.8 8.8.8.4"
+dns="8.8.8.8 8.8.4.4"
 
 to the file before the 'exec run-parts' line and save the change.
 

@@ -2,7 +2,7 @@
 
 echo "Starting AntThrottle" >/var/log/antthrottle.log
 
-PATH=$PATH:/bin:/usr/bin
+PATH=$PATH:/bin:/usr/bin:/usr/local/bin
 MAXTEMP=60
 MINTEMP=30
 REFTEMP=0
@@ -37,9 +37,8 @@ MORE200="225"
 
 while true
 do
-        STAT=`cgminer-api -o stats`
-        TEMP=`echo $STAT | awk -F "," '{print $61}' | awk -F "=" '{print $2}'`
-        FREQ=`echo $STAT | awk -F "," '{print $21}' | awk -F "=" '{print $2}'`
+        TEMP=`antstat TEMP`
+        FREQ=`antstat FREQ`
 
 	if [ "$TEMP" -ne "$REFTEMP" ]
 	then

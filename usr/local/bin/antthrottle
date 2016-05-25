@@ -3,7 +3,8 @@
 echo "Starting AntThrottle" >/var/log/antthrottle.log
 
 PATH=$PATH:/bin:/usr/bin
-MAXTEMP=50
+MAXTEMP=60
+MINTEMP=30
 REFTEMP=0
 
 CODE400="3:400:0f82"
@@ -16,18 +17,29 @@ CODE250="5:250:0982"
 CODE225="5:225:0882"
 CODE200="6:200:0782"
 
-DROP400="375"
-DROP375="350"
-DROP350="325"
-DROP325="300"
-DROP300="275"
-DROP275="250"
-DROP250="225"
-DROP225="200"
+LESS400="375"
+LESS375="350"
+LESS350="325"
+LESS325="300"
+LESS300="275"
+LESS275="250"
+LESS250="225"
+LESS225="200"
+
+MORE375="400"
+MORE350="375"
+MORE325="350"
+MORE300="325"
+MORE275="300"
+MORE250="275"
+MORE225="250"
+MORE200="225"
 
 while true
 do
-	TEMP=`cgminer-api -o stats | awk -F "," '{print $61}' | awk -F "=" '{print $2}'`
+        STAT=`cgminer-api -o stats`
+        TEMP=`echo $STAT | awk -F "," '{print $61}' | awk -F "=" '{print $2}'`
+        FREQ=`echo $STAT | awk -F "," '{print $21}' | awk -F "=" '{print $2}'`
 
 	if [ "$TEMP" -ne "$REFTEMP" ]
 	then
@@ -37,25 +49,53 @@ do
 
 	if [ "$TEMP" -ge "$MAXTEMP" ]
 	then
-		echo "Too Hot!" >>/var/log/antthrottle.log
+                echo "Too Hot!" >>/var/log/antthrottle.log
 
-		FREQ=`cgminer-api -o stats | awk -F "," '{print $21}' | awk -F "=" '{print $2}'`
-		eval DROP='$'DROP$FREQ
+                eval LESS='$'LESS$FREQ
+                eval REPLACE='$'CODE$FREQ
+                eval WITH='$'CODE$LESS
 
-		echo "Current frequency is $FREQ, dropping to $DROP" >>/var/log/antthrottle.log
+                if [ "$REPLACE" = "" ]
+                then
+                        echo "Unsupported clock frequency ($FREQ). Please set to one of 200MHz to 400MHz in steps of 25MHz." >>/var/log/antthrottle.log
+                else
+                        if [ "$WITH" = "" ]
+                        then
+                                echo "Reached minimum supported frequency ($FREQ). Not able to reduce further. Check your equipment!" >> /var/log/antthrottle.log
+                        else
+                                echo "Current frequency is $FREQ, dropping to $LESS" >>/var/log/antthrottle.log
 
-		eval REPLACE='$'CODE$FREQ
-		eval WITH='$'CODE$DROP
+                                sed -i -- 's/'$REPLACE'/'$WITH'/g' /config/cgminer.conf
 
-		if [ "$REPLACE" = "" ]
-		then
-			echo "Unsupported clock frequency ($FREQ). Please set to one of 200MHz to 400MHz in steps of 25MHz." >>/var/log/antthrottle.log
-		else
-			sed -i -- 's/'$REPLACE'/'$WITH'/g' /config/cgminer.conf
-
-			/etc/init.d/cgminer.sh restart >>/var/log/antthrottle.log
-		fi
+                                /etc/init.d/cgminer.sh restart >>/var/log/antthrottle.log
+                        fi
+                fi
 	fi
+	
+	if [ "$TEMP" -lt "$MINTEMP" ]
+        then
+                echo "Too Cool!" >>/var/log/antthrottle.log
+
+                eval MORE='$'MORE$FREQ
+                eval REPLACE='$'CODE$FREQ
+                eval WITH='$'CODE$MORE
+
+                if [ "$REPLACE" = "" ]
+                then
+                        echo "Unsupported clock frequency ($FREQ). Please set to one of 200MHz to 400MHz in steps of 25MHz." >>/var/log/antthrottle.log
+                else
+                        if [ "$WITH" = "" ]
+                        then
+                                echo "Reached maximum supported frequency ($FREQ). Not able to increase further. You can increase this by changing the code." >> /var/log/antthrottle.log
+                        else
+                                echo "Current frequency is $FREQ, raising to $MORE" >>/var/log/antthrottle.log
+
+                                sed -i -- 's/'$REPLACE'/'$WITH'/g' /config/cgminer.conf
+
+                                /etc/init.d/cgminer.sh restart >>/var/log/antthrottle.log
+                        fi
+                fi
+        fi
 
 	sleep 30
 done

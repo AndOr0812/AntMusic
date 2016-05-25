@@ -4,6 +4,8 @@ To install these scripts on your S5, follow the following steps:
 
 $ wget https://github.com/minerchuck/AntMusic/archive/master.zip
 
+I tried this directly on the miner but wget does not seem to like https.
+
 2) Copy to your miner:
 
 $ scp master.zip root@antMiner.local

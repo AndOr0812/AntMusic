@@ -1,0 +1,16 @@
+#!/bin/sh
+
+PATH=$PATH:/bin:/usr/bin                             
+                        
+HASH="16"               
+FREQ="21"
+FAN1="28"
+FAN2="29"
+TEMP="61"
+HW="63"  
+         
+eval COL='$'$1
+              
+STAT=`cgminer-api -o stats`
+                           
+echo $STAT | awk -v col=$COL -F "," '{print $col}' | awk -F "=" '{print $2}'

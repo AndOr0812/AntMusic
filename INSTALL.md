@@ -8,7 +8,7 @@ I tried this directly on the miner but wget does not seem to like https.
 
 2) Copy to your miner:
 
-$ scp master.zip root@antMiner.local
+$ scp master.zip root@antMiner.local:.
 
 3) Log onto the miner:
 

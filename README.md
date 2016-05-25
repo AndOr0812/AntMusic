@@ -1,7 +1,7 @@
 # AntMusic
 Tools to help you manage your Bitmain AntMiner.
 
-The toolkit currently containts two daemons that can be installed on your Bitmain AntMiner to help you manage your gear. The objectives of this project are to provide bitcoin miners with tools that will allow them to a) maximize work b) minimize overheating c) manage noise.
+The toolkit currently containts two daemons and a utility that can be installed on your Bitmain AntMiner to help you manage your gear. The objectives of this project are to provide bitcoin miners with tools that will allow them to a) maximize work b) minimize overheating c) manage noise.
 
 The two daemons are currently running on my S5 without any untoward behaviour so far - but I give no guarantees: use at your own risk.
 
@@ -16,5 +16,7 @@ You can use both daemons together. AntRota will set the hour by hour profile and
 Both scripts are installed on your miner in /usr/local/bin/ and have a SystemV daemon handler in /etc/init.d. Start them using /etc/init.d/[daemon] start. If you make any changes to either script, restart it using /etc/init.d/[daemon] stop and /etc/init.d/[daemon] start.
 
 Both scripts produce log files is /var/log/. You will need to manage these if you run your miner for a very long time without a reboot (restarting the daemons will start the log files anew).
+
+AntStat is a helper script that will enable you to get various statistics about your miner from the command line. It takes one argument (currently HASH, FREQ, FAN1, FAN2, TEMP or HW for hash rate in GHx, clock frequency in MHz, fan 1 RPM, fan 2 RPM, average temperature and harware error percentage).
 
 You will need to ssh onto your miner to install the software and configure it: using a linux box on the same LAN, ssh antMiner.local (user root, password admin). You can copy the software from your linux box using scp AntMusic-master.zip antMiner.local:. . If you don't have a linux box on the same LAN you will have to figure out how to ssh to your miner yourself.

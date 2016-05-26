@@ -1,16 +1,18 @@
 #!/bin/sh
 
-echo "Starting..." >/var/log/antrota.log
+LOG="/var/log/antrota.log"
+
+echo "Starting..." >$LOG
 
 POOL="pool.ntp.org"
 
 NTPD="/usr/local/bin/ntpdate"
 
-test -x $NTPD && echo "Setting Date and Time using $POOL" >>/var/log/antrota && $NTPD -b -s -u $POOL
+test -x $NTPD && echo "Setting Date and Time using $POOL" >>$LOG && $NTPD -b -s -u $POOL
 
 DATE=`/bin/date +"%c"`
 
-echo "Date: $DATE" >> /var/log/antrota.log
+echo "Date: $DATE" >>$LOG
 
 TARGET="/config/cgminer.conf"
 
@@ -33,11 +35,11 @@ do
 
 	if [ "$MIN" = "00" ]
 	then
-		echo "Time: $HOUR:$MIN:$SEC" >>/var/log/antrota.log
+		echo "Time: $HOUR:$MIN:$SEC" >>$LOG
 
 		SOURCE="/config/antrota/cgminer.conf.$HOUR"
 
-		echo "Looking for $SOURCE" >>/var/log/antrota.log
+		echo "Looking for $SOURCE" >>$LOG
 
 		if [ -e $SOURCE ]
 		then
@@ -45,11 +47,11 @@ do
 
 			/bin/cp -a $SOURCE $TARGET
 
-			echo "Restarting miner" >>/var/log/antrota.log
-			/etc/init.d/cgminer.sh restart >>/var/log/antrota.log
-			echo "Done" >> /var/log/antrota.log
+			echo "Restarting miner" >>$LOG
+			/etc/init.d/cgminer.sh restart >>$LOG
+			echo "Done" >>$LOG
 		else
-			echo "Not found" >>/var/log/antrota.log
+			echo "Not found" >>$LOG
 		fi
 	fi
 done

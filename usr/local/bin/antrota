@@ -1,10 +1,12 @@
 #!/bin/sh
 
+echo "Starting..." >/var/log/antrota.log
+
 POOL="pool.ntp.org"
 
-echo "Setting Date and Time using $POOL" >/var/log/antrota.log
+NTPD="/usr/local/bin/ntpdate"
 
-/usr/bin/ntpdate -b -s -u $POOL
+test -x $NTPD && echo "Setting Date and Time using $POOL" >>/var/log/antrota && $NTPD -b -s -u $POOL
 
 DATE=`/bin/date +"%c"`
 
@@ -33,7 +35,7 @@ do
 	then
 		echo "Time: $HOUR:$MIN:$SEC" >>/var/log/antrota.log
 
-		SOURCE="/etc/antrota/cgminer.conf.$HOUR"
+		SOURCE="/config/antrota/cgminer.conf.$HOUR"
 
 		echo "Looking for $SOURCE" >>/var/log/antrota.log
 

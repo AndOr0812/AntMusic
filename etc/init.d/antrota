@@ -6,7 +6,7 @@ NAME=antrota
 DESC="Antminer Shift Rota Daemon"
 set -e
 #set -x
-test -x "$DAEMON" || exit 0
+test -x "$DAEMON" || echo "$DAEMON not found or not executable" && exit 0
 
 do_start() {
 	start-stop-daemon --start --exec "$DAEMON" --background

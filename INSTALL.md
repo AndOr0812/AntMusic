@@ -26,6 +26,8 @@ $ cp -a etc /
 
 $ cp -a usr /
 
+$ cp -a config /
+
 6 Make the files executible
 
 $ chmod +x /usr/local/bin/antstat
@@ -42,7 +44,11 @@ $ chmod +x /etc/init.d/antthrottle
 
 a) Examine and adapt files in /etc/antrota
 
-b) Adjust MAXTEMP and MINTEMP in /usr/local/antthrottle
+b) Adjust MAXTEMP and MINTEMP in /usr/local/antthrottle or create a file called /config/antthrottle.conf containing two lines:
+
+MAXTEMP=[your maximum threshold]
+
+MINTEMP=[your minimum threshold]
 
 8 Start the service(s) you want to use
 
@@ -55,9 +61,9 @@ $ /etc/init.d/antthrottle start
 $ tail -f /var/log/ant*.log
 
 ==> /var/log/antrota.log <==
-Setting Date and Time using pool.ntp.org
-Date: Wed May 25 12:42:31 2016
+Starting...
+Date: Thu May 26 13:19:13 2016
 
 ==> /var/log/antthrottle.log <==
-Starting AntThrottle
-Average Temperature: 52
+Starting... 
+Average Temperature: 51

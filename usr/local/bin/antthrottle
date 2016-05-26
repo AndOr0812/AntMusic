@@ -13,8 +13,18 @@ REFTEMP=0
 CONF="/config/antthrottle.conf"
 STAT="/usr/local/bin/antstat"
 
-test -x $CONF && $CONF || echo "No $CONF file found, using defaults" >>$LOG
-test -x $STAT || echo "$STAT not found, aborting" >>$LOG && exit 0
+if [ -x $CONF ]
+then
+	echo "No $CONF file found, using defaults" >>$LOG
+else
+	$CONF
+fi
+
+if [ ! -x $STAT ]
+then
+	echo "$STAT not found, aborting" >>$LOG
+	exit 0
+fi
 
 CODE400="3:400:0f82"
 CODE375="3:375:0e82"

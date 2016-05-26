@@ -8,7 +8,11 @@ POOL="pool.ntp.org"
 
 NTPD="/usr/local/bin/ntpdate"
 
-test -x $NTPD && echo "Setting Date and Time using $POOL" >>$LOG && $NTPD -b -s -u $POOL
+if [ -x $NTPD ]
+then
+	echo "Setting Date and Time using $POOL" >>$LOG
+	$NTPD -b -s -u $POOL
+fi
 
 DATE=`/bin/date +"%c"`
 

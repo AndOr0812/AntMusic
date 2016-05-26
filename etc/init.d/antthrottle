@@ -6,9 +6,18 @@ STAT=/usr/local/bin/antstat
 NAME=antthrottle
 DESC="Antminer Frequency Throttler"
 set -e
-#set -x
-test -x "$DAEMON" || echo "$DAEMON not found or not executable" && exit 0
-test -x "$STAT" || echo "Required command $STAT not found or not executable" && exit 0
+
+if [ ! -x "$DAEMON" ]
+then
+	echo "$DAEMON not found or not executable"
+	exit 0
+fi
+
+if [ ! -x "$STAT" ]
+then
+	echo "Required command $STAT not found or not executable"
+	exit 0
+fi
 
 do_start() {
 	start-stop-daemon --start --exec "$DAEMON" --background

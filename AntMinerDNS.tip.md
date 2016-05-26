@@ -16,7 +16,7 @@ root@antMiner:~# vi /usr/share/udhcpc/default.script
 
 add
 
-dns="8.8.8.8 8.8.8.4"
+dns="8.8.8.8 8.8.4.4"
 
 to the file before the 'exec run-parts' line and save the change.
 
@@ -27,9 +27,15 @@ root@antMiner:~# udhcpc
 You should see....
 
 root@antMiner:~# udhcpc
+
 udhcpc (v1.20.2) started
+
 Sending discover...
+
 Sending select for 192.168.1.66...
+
 Lease of 192.168.1.66 obtained, lease time 86400
+
 /etc/udhcpc.d/50default: Adding DNS 8.8.8.8
+
 /etc/udhcpc.d/50default: Adding DNS 8.8.8.4

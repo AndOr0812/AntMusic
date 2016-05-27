@@ -5,7 +5,7 @@ The toolkit currently containts two daemons and a utility that can be installed 
 
 The two daemons are currently running on my S5 without any untoward behaviour so far - but I give no guarantees: use at your own risk.
 
-AntRota is a shell script that automatically switches between configurations at certain times of the day. You can have as many as 24 different configurations (one for each hour of the day) but you can leave gaps. You can use different configurations to increase or decrease the clock speed and to modify the fan speed. I have a night mode with a low clock speed and reduced fan RPM - so I can get some sleep - and other daytime configurations so the miner works hardest in the morning and then backs off a little for the afternoon.
+[i]antrota[/i] is a shell script that automatically switches between configurations at certain times of the day. You can have as many as 24 different configurations (one for each hour of the day) but you can leave gaps. You can use different configurations to increase or decrease the clock speed and to modify the fan speed. I have a night mode with a low clock speed and reduced fan RPM - so I can get some sleep - and other daytime configurations so the miner works hardest in the morning and then backs off a little for the afternoon.
 
 Put the congfiurations in /etc/antrota and call them cgminer.conf.HH where HH is 00 for midnight, 01 for 1AM, etc. You can generate these files using the Bitmain-provided Miner Configutation web interface - just set things up how you want them and then copy /config/cgminer.config to /etc/antrota/.
 

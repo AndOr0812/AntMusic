@@ -26,6 +26,10 @@ then
 	exit 0
 fi
 
+CODE500="3:500:0981"
+CODE475="3:475:0901"
+CODE450="3:450:0881"
+CODE425="3:425:0801"
 CODE400="3:400:0f82"
 CODE375="3:375:0e82"
 CODE350="3:350:0d82"
@@ -36,6 +40,10 @@ CODE250="5:250:0982"
 CODE225="5:225:0882"
 CODE200="6:200:0782"
 
+LESS500="475"
+LESS475="450"
+LESS450="425"
+LESS425="400"
 LESS400="375"
 LESS375="350"
 LESS350="325"
@@ -45,6 +53,10 @@ LESS275="250"
 LESS250="225"
 LESS225="200"
 
+MORE475="500"
+MORE450="475"
+MORE425="450"
+MORE400="425"
 MORE375="400"
 MORE350="375"
 MORE325="350"
@@ -75,7 +87,7 @@ do
 
 		if [ "$REPLACE" = "" ]
 		then
-			echo "Unsupported clock frequency ($FREQ). Please set to one of 200MHz to 400MHz in steps of 25MHz." >>$LOG
+			echo "Unsupported clock frequency ($FREQ). Please set to one of 200MHz to 500MHz in steps of 25MHz." >>$LOG
 		else
 			if [ "$WITH" = "" ]
 			then
@@ -100,7 +112,7 @@ do
 
 		if [ "$REPLACE" = "" ]
 		then
-			echo "Unsupported clock frequency ($FREQ). Please set to one of 200MHz to 400MHz in steps of 25MHz." >>$LOG
+			echo "Unsupported clock frequency ($FREQ). Please set to one of 200MHz to 500MHz in steps of 25MHz." >>$LOG
 		else
 			if [ "$WITH" = "" ]
 			then

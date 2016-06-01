@@ -13,7 +13,7 @@ REFTEMP=0
 CONF="/config/antthrottle.conf"
 STAT="/usr/local/bin/antstat"
 
-if [ -x $CONF ]
+if [ ! -x $CONF ]
 then
 	echo "No $CONF file found, using defaults" >>$LOG
 else
@@ -40,31 +40,19 @@ CODE250="5:250:0982"
 CODE225="5:225:0882"
 CODE200="6:200:0782"
 
-LESS500="475"
-LESS475="450"
-LESS450="425"
-LESS425="400"
-LESS400="375"
-LESS375="350"
-LESS350="325"
-LESS325="300"
-LESS300="275"
-LESS275="250"
-LESS250="225"
-LESS225="200"
+LOW="200"
+HIGH="500"
+STEP="25"
 
-MORE475="500"
-MORE450="475"
-MORE425="450"
-MORE400="425"
-MORE375="400"
-MORE350="375"
-MORE325="350"
-MORE300="325"
-MORE275="300"
-MORE250="275"
-MORE225="250"
-MORE200="225"
+CLOCK="$LOW"
+
+while [ $CLOCK -lt "$HIGH" ]
+do
+	NEWCLOCK=`expr $CLOCK + $STEP`
+	eval MORE$CLOCK="$NEWCLOCK"
+	eval LESS$NEWCLOCK="$CLOCK"
+	CLOCK=$NEWCLOCK
+done
 
 while true
 do
@@ -87,13 +75,13 @@ do
 
 		if [ "$REPLACE" = "" ]
 		then
-			echo "Unsupported clock frequency ($FREQ). Please set to one of 200MHz to 500MHz in steps of 25MHz." >>$LOG
+			echo "Unsupported clock frequency ($FREQ MHz). Please set to one of $LOW MHz to $HIGH MHz in steps of $STEP MHz." >>$LOG
 		else
 			if [ "$WITH" = "" ]
 			then
-				echo "Reached minimum supported frequency ($FREQ). Not able to reduce further. Check your equipment!" >>$LOG
+				echo "Reached minimum supported frequency ($FREQ MHz). Not able to reduce further. Check your equipment!" >>$LOG
 			else
-				echo "Current frequency is $FREQ, dropping to $LESS" >>$LOG
+				echo "Current frequency is $FREQ MHz, dropping to $LESS MHz" >>$LOG
 
 				sed -i -- 's/'$REPLACE'/'$WITH'/g' /config/cgminer.conf
 
@@ -112,13 +100,13 @@ do
 
 		if [ "$REPLACE" = "" ]
 		then
-			echo "Unsupported clock frequency ($FREQ). Please set to one of 200MHz to 500MHz in steps of 25MHz." >>$LOG
+			echo "Unsupported clock frequency ($FREQ MHz). Please set to one of $LOW MHz to $HIGH MHz in steps of $STEP MHz." >>$LOG
 		else
 			if [ "$WITH" = "" ]
 			then
-				echo "Reached maximum supported frequency ($FREQ). Not able to increase further. You can increase this by changing the code." >>$LOG
+				echo "Reached maximum supported frequency ($FREQ MHz). Not able to increase further. You can increase this by changing the code." >>$LOG
 			else
-				echo "Current frequency is $FREQ, raising to $MORE" >>$LOG
+				echo "Current frequency is $FREQ MHz, raising to $MORE MHz" >>$LOG
 
 				sed -i -- 's/'$REPLACE'/'$WITH'/g' /config/cgminer.conf
 

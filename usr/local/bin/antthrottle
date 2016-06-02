@@ -17,7 +17,7 @@ if [ ! -x $CONF ]
 then
 	echo "No $CONF file found, using defaults" >>$LOG
 else
-	$CONF
+	. $CONF
 fi
 
 if [ ! -x $STAT ]

@@ -4,17 +4,19 @@ LOG="/var/log/antrota.log"
 
 echo "Starting..." >$LOG
 
-if [ -x /config/tz ]
-then
-	. /config/tz
-fi
-
 POOL="pool.ntp.org"
 NTPD="/usr/local/bin/ntpdate"
+TZFILE="/config/tz"
 
 if [ -x $NTPD ]
 then
+	if [ -x $TZFILE ]
+	then
+		. $TZFILE
+	fi
+
 	echo "Setting Date and Time using $POOL" >>$LOG
+	
 	$NTPD -b -s -u $POOL
 fi
 

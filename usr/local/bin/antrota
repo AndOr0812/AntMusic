@@ -4,8 +4,12 @@ LOG="/var/log/antrota.log"
 
 echo "Starting..." >$LOG
 
-POOL="pool.ntp.org"
+if [ -x /config/tz ]
+then
+	. /config/tz
+fi
 
+POOL="pool.ntp.org"
 NTPD="/usr/local/bin/ntpdate"
 
 if [ -x $NTPD ]

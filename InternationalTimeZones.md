@@ -9,4 +9,4 @@ is
 but the output of
 `TZ GMT-1`
 is
-`Fri Jun 17 10:07:29 GMT 2016`, which is BST (British Summer Time), but BST is defined as GMT+1! This means that if you are in the US, you need to add your time difference to UTC and in France, Russia and Japan, subtract it.
+`Fri Jun 17 10:07:29 GMT 2016`, which is BST (British Summer Time), but BST is defined as GMT+1! This means that if you are in the US, you need to add your time difference to UTC and in France, Russia and Japan, subtract it. Here's an explanation http://www.pixelbeat.org/docs/linux_timezones/.
